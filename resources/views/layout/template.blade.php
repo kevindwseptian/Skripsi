@@ -139,7 +139,7 @@
         <li class="header">Master Data</li>
 
         <li><a href="#"><i class="fa fa-book"></i> <span>Customer</span></a></li>
-        <li><a href="#"><i class="fa fa-book"></i> <span>Lpg Unit</span></a></li>
+        <li><a href="{{route('produk.index')}}"><i class="fa fa-book"></i> <span>Lpg Unit</span></a></li>
         <li class="header">Warehouse</li>
         <li><a href="#"><i class="fa fa-book"></i> <span>Stock</span></a></li>
         <li><a href="#"><i class="fa fa-book"></i> <span>Stock Flow</span></a></li>

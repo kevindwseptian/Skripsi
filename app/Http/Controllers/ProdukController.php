@@ -14,7 +14,8 @@ class ProdukController extends Controller
      */
     public function index()
     {
-        //
+        $data=produk::all();
+        return view("admin.produk.index",['produk'=>$data]);
     }
 
     /**
@@ -24,7 +25,7 @@ class ProdukController extends Controller
      */
     public function create()
     {
-        //
+        return view("admin.produk.create");
     }
 
     /**
@@ -35,7 +36,11 @@ class ProdukController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // dd($request->all());
+        $insert=produk::create($request->all());
+        if ($insert){
+            return redirect()->route('produk.index');
+        }
     }
 
     /**
@@ -55,9 +60,10 @@ class ProdukController extends Controller
      * @param  \App\Models\produk  $produk
      * @return \Illuminate\Http\Response
      */
-    public function edit(produk $produk)
+    public function edit($id)
     {
-        //
+        $data = produk::where('id',$id)->get();
+        return view("admin.produk.edit",['produk'=>$data]);
     }
 
     /**
@@ -67,9 +73,20 @@ class ProdukController extends Controller
      * @param  \App\Models\produk  $produk
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, produk $produk)
+    public function update(Request $request, $id)
     {
-        //
+        $find = produk::find($id);
+        $data = [
+            'unit_code' => $request->unit_code,
+            'unit_name' => $request->unit_name,
+            'price' => $request->price,
+        ];
+        $update = produk::where('id',$id)->update($data);
+
+        if($update){
+            return redirect()->route('produk.index');
+        }
+
     }
 
     /**

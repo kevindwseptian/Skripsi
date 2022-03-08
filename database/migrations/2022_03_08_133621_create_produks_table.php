@@ -15,6 +15,9 @@ return new class extends Migration
     {
         Schema::create('produks', function (Blueprint $table) {
             $table->id();
+            $table->string("unit_code");
+            $table->string("unit_name");
+            $table->double("price");
             $table->timestamps();
         });
     }
