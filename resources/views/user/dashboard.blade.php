@@ -51,16 +51,25 @@
         <nav id="navbar" class="navbar">
           <ul>
             <li><a href="#hero">Home</a></li>
-            <li><a href="{{ route('login') }}"><span>Pemesanan</span></a>
+            <li class="dropdown"><a href="#"><span>Pemesanan</span> <i class="bi bi-chevron-down"></i></a>
+              <ul>
+                <li><a href="#">Order</a></li>
+                <li><a href="#">Transaksi</a></li>
+                </li>
+              </ul>
             </li>
             <li><a class="nav-link scrollto" href="#contact">Contact</a></li>
-            {{-- <li class="nav-link">{{ Auth::user()->name }}</li> --}}
+            <li><a class="nav-link">{{Auth::user()->name }}</a></li>
             <li>
-                <a class="nav-link scrollto" style="padding-right: 30px;" href="{{ route('login') }}">
-                 {{ __('login') }}
+                <a class="nav-link"style="padding-right: 30px;" href="{{ route('logout') }}"
+                onclick="event.preventDefault();
+                              document.getElementById('logout-form').submit();">
+                 {{ __('Logout') }}
              </a>
 
-
+             <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                 @csrf
+             </form>
             </li>
 
 
