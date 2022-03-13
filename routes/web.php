@@ -15,9 +15,12 @@ Route::get('/test', function(){
 Route::get('/admin', function(){
     return view('admin.index');
 });
+Route::get('/dashboard', function(){
+    return view('dashboard');
+});
 Route::resource('produk', ProdukController::class);
 Route::resource('user', DashBoardController::class);
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::get('/dashboard',[App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard');
+// Route::get('/dashboard', [App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard');
