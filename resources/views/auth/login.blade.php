@@ -141,7 +141,7 @@
                     <!-- /.col -->
                 </div>
                 Belum punya akun? Daftar sekarang
-                        <a href="#" >
+                        <a href="{{route('register')}}" >
                             Daftar
                         </a>
                         <br/>
