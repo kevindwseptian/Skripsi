@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string("unit_code");
             $table->string("unit_name");
             $table->double("price");
+            $table->integer("stock");
             $table->timestamps();
         });
     }

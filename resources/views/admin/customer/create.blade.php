@@ -23,12 +23,7 @@
             <label for="exampleInputPassword1">Price</label>
             <input type="Number" class="form-control" id="price" placeholder="Price" name="price">
           </div>
-          <div class="form-group">
-            <label for="exampleInputPassword1">Stock</label>
-            <input type="Number" class="form-control" id="stock" placeholder="stock" name="stock">
-          </div>
       </div>
-
       <!-- /.box-body -->
 
       <div class="box-footer">

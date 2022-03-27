@@ -16,7 +16,7 @@ class PemesananController extends Controller
     {
         // $selectOrder = Order::all();
         $selectOrder = DB::table('orders')
-        ->join('users','users.id','=','users.id')
+        ->join('users','orders.iduser','=','users.id')
         ->select(
                 'orders.namatoko',
                 'users.notelp',
@@ -28,6 +28,7 @@ class PemesananController extends Controller
                 'orders.pembayaran',
                 'orders.status'
                 )
+                ->where('orders.iduser',auth()->user()->id)
         ->get();
 
             // dd($selectOrder);

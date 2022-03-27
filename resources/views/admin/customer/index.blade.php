@@ -5,7 +5,7 @@
 <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-       Data LPG
+       Data Customer
 
       </h1>
       <a href="{{route('produk.create')}}" class="btn btn-primary">
@@ -32,33 +32,37 @@
         <div class="box-body">
             <table class="table table-hover">
                 <tbody><tr>
-                  <th>No</th>
-                  <th>Unit code</th>
-                  <th>Unit name</th>
-                  <th>Price</th>
-                  <th>Stock</th>
-                  <th>Action</th>
+                  <th>Nama</th>
+                  <th>Alamat</th>
+                  <th>No Telp</th>
+                  <th>NIK</th>
+                  <th>Nama Toko</th>
+                  <th>Email</th>
+                  <th>Password</th>
                 </tr>
-                @foreach ($produk as $item => $prdk)
+                @foreach ($customer as $item => $cstmr)
                 <tr>
                     <td>
 
                         {{++$item}}
                     </td>
                     <td>
-                        {{$prdk->unit_code}}
+                        {{$cstmr->name}}
                     </td>
                     <td>
-                        {{$prdk->unit_name}}
+                        {{$cstmr->alamat}}
                     </td>
                     <td>
-                        {{$prdk->price}}
+                        {{$cstmr->notelp}}
                     </td>
                     <td>
-                        {{$prdk->stock}}
+                        {{$cstmr->nik}}
                     </td>
                     <td>
-                        <a href="{{route('produk.edit',$prdk->id)}}" class="btn btn-warning">
+                        {{$cstmr->email}}
+                    </td>
+                    <td>
+                        <a href="{{route('produk.edit',$cstmr->id)}}" class="btn btn-warning">
                             Edit
                         </a>
                     </td>

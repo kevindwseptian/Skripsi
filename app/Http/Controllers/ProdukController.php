@@ -80,6 +80,7 @@ class ProdukController extends Controller
             'unit_code' => $request->unit_code,
             'unit_name' => $request->unit_name,
             'price' => $request->price,
+            'stock' => $request->stock,
         ];
         $update = produk::where('id',$id)->update($data);
 

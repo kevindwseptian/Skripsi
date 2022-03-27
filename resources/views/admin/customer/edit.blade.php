@@ -26,11 +26,6 @@
             <input type="Number" class="form-control" id="price" placeholder="Price" name="price" value="{{ $item->price }}">
           </div>
       </div>
-      <div class="form-group">
-        <label for="exampleInputPassword1">Stock</label>
-        <input type="Number" class="form-control" id="stock" placeholder="stock" name="stock" value="{{ $item->stock }}">
-      </div>
-  </div>
       <!-- /.box-body -->
 
       <div class="box-footer">
