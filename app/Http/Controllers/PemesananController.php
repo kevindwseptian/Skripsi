@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Models\Order;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Auth;
 
 class PemesananController extends Controller
 {
@@ -14,29 +15,50 @@ class PemesananController extends Controller
      */
     public function index()
     {
-
-        $selectOrder = DB::table('orders')
-        ->join('users','orders.iduser','=','users.id')
-        ->select(
-                'users.notelp',
-                'orders.id',
-                'orders.gas3kg',
-                'orders.gas12kg',
-                'orders.gas50kg',
-                'orders.tglkirim',
-                'users.alamat',
-                'orders.pembayaran',
-                'orders.status'
-                )
-        ->where('orders.iduser',auth()->user()->id)
-        ->orderBy('orders.created_at','ASC')
-        ->get();
+        // $selectOrder = DB::table('orders')
+        // ->join('users','orders.iduser','=','users.id')
+        // ->select(
+        //         'users.notelp',
+        //         'orders.id',
+        //         'orders.gas3kg',
+        //         'orders.gas12kg',
+        //         'orders.gas50kg',
+        //         'orders.tglkirim',
+        //         'users.alamat',
+        //         'orders.pembayaran',
+        //         'orders.status'
+        //         )
+        // ->where('orders.iduser',auth()->user()->id)
+        // ->orderBy('orders.created_at','ASC')
+        // ->get();
 
             // dd($selectOrder);
 
-        return view('user.histrory',[
-            'order' => $selectOrder
-        ]);
+        // if(Auth::user()->role == "A"){
+            $selectOrder = DB::table('orders')
+            ->join('users','orders.iduser','=','users.id')
+            ->select(
+                    'users.name',
+                    'users.notelp',
+                    'orders.id',
+                    'orders.gas3kg',
+                    'orders.gas12kg',
+                    'orders.gas50kg',
+                    'orders.tglkirim',
+                    'users.alamat',
+                    'orders.pembayaran',
+                    'orders.status'
+                    )
+            ->orderBy('orders.created_at','ASC')
+            ->get();
+            return view("admin/produk.pemesananmasuk",[
+                'order' => $selectOrder
+            ]);
+        //}
+
+        // return view('user.histrory',[
+        //     'order' => $selectOrder
+        // ]);
     }
 
     /**

@@ -22,6 +22,7 @@ Route::get('/db', [DashboardController::class, 'indexUser'])->name('db');
 
 Route::get('/admin', [DashboardController::class, 'indexAdmin'])->name('dashboard-admin');
 Route::resource('customer', CustomerController::class);
+Route::redirect('orders',pemesanan.store::class);
 
 Route::resource('produk', ProdukController::class);
 
