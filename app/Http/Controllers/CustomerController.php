@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Customer;
 use Illuminate\Http\Request;
+use Auth;
 
 class CustomerController extends Controller
 {
@@ -58,7 +59,8 @@ class CustomerController extends Controller
      */
     public function edit(Customer $customer)
     {
-        //
+        $data=Customer::where('id', Auth::user()->id)->get();
+        return view("user.customeredit", ['customer'=>$data]);
     }
 
     /**
@@ -68,9 +70,16 @@ class CustomerController extends Controller
      * @param  \App\Models\Customer  $customer
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Customer $customer)
+    public function update(Request $request)
     {
-        //
+         Customer::where('id', Auth::user()->id)->update([
+            'name' => $request->name,
+            'nik' => $request->nik,
+            'notelp' => $request->nohp,
+            'email' => $request->email,
+            'alamat' => $request->alamat,
+        ]);
+        return view("user.dashboard");
     }
 
     /**
@@ -79,8 +88,9 @@ class CustomerController extends Controller
      * @param  \App\Models\Customer  $customer
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Customer $customer)
+    public function destroy($customer)
     {
-        //
+        Customer::where('id', $customer)->delete();
+        return redirect('/customer')->with('success','Data Berhasil Disimpan');
     }
 }

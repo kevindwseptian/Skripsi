@@ -8,9 +8,6 @@
        Data Customer
 
       </h1>
-      <a href="{{route('produk.create')}}" class="btn btn-primary">
-          Tambah Data
-      </a>
     </section>
 
     <!-- Main content -->
@@ -32,13 +29,12 @@
         <div class="box-body">
             <table class="table table-hover">
                 <tbody><tr>
+                  <th>Id</th>
                   <th>Nama</th>
                   <th>Alamat</th>
                   <th>No Telp</th>
                   <th>NIK</th>
-                  <th>Nama Toko</th>
                   <th>Email</th>
-                  <th>Password</th>
                 </tr>
                 @foreach ($customer as $item => $cstmr)
                 <tr>
@@ -62,9 +58,12 @@
                         {{$cstmr->email}}
                     </td>
                     <td>
-                        <a href="{{route('produk.edit',$cstmr->id)}}" class="btn btn-warning">
-                            Edit
-                        </a>
+                        <form onsubmit="return confirm('Apakah Anda Yakin ?');"
+                        action="{{ route('customer.destroy', $cstmr->id) }}" method="POST">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                    </form>
                     </td>
 
 

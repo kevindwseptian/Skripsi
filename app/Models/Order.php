@@ -9,7 +9,6 @@ class Order extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'namatoko',
         'gas3kg',
         'gas12kg',
         'gas50kg',

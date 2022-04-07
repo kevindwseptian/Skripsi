@@ -14,12 +14,12 @@ class PemesananController extends Controller
      */
     public function index()
     {
-        // $selectOrder = Order::all();
+
         $selectOrder = DB::table('orders')
         ->join('users','orders.iduser','=','users.id')
         ->select(
-                'orders.namatoko',
                 'users.notelp',
+                'orders.id',
                 'orders.gas3kg',
                 'orders.gas12kg',
                 'orders.gas50kg',
@@ -28,7 +28,8 @@ class PemesananController extends Controller
                 'orders.pembayaran',
                 'orders.status'
                 )
-                ->where('orders.iduser',auth()->user()->id)
+        ->where('orders.iduser',auth()->user()->id)
+        ->orderBy('orders.created_at','ASC')
         ->get();
 
             // dd($selectOrder);
@@ -56,6 +57,7 @@ class PemesananController extends Controller
      */
     public function store(Request $request)
     {
+
         $data = [
             'namatoko' => $request->namatoko,
             'gas3kg' => $request->jumlahgas3kg,
@@ -67,13 +69,13 @@ class PemesananController extends Controller
             'iduser'=> auth()->user()->id
 
         ];
-
+        // dd($data);
         $insertData = Order::create($data);
 
         if($insertData){
-            return redirect('user/pemesanan/index')->with('success','Data Berhasil Disimpan');
+            return redirect()->route('pemesanan.index')->with('success','Data Berhasil Disimpan');
         }else{
-            return redirect('user/pemesanan/store')->with('error','Data Gagal Disimpan');
+            return redirect()->route('pemesanan.store')->with('error','Data Gagal Disimpan');
         }
     }
 
@@ -96,7 +98,8 @@ class PemesananController extends Controller
      */
     public function edit($id)
     {
-        //
+        $data=Order::where('id', $id)->get();
+        return view("user.editpemesanan", ['pemesanan'=>$data]);
     }
 
     /**
@@ -108,7 +111,14 @@ class PemesananController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        Order::where('id', $id)->update([
+            'gas3kg' => $request->jumlahgas3kg,
+            'gas12kg' => $request->jumlahgas12kg,
+            'gas50kg' => $request->jumlahgas50kg,
+            'tglkirim' => $request->tglkirim,
+            'pembayaran' => $request->pembayaran,
+        ]);
+        return redirect('user/pemesanan')->with('success','Data Berhasil Disimpan');
     }
 
     /**
@@ -119,6 +129,7 @@ class PemesananController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Order::where('id', $id)->delete();
+        return redirect('user/pemesanan')->with('success','Data Berhasil Disimpan');
     }
 }

@@ -18,7 +18,6 @@ class OrderSeeder extends Seeder
     {
         $data = [
             [
-                'namatoko' => 'ankev',
                 'gas3kg' => '1',
                 'gas12kg' => '1',
                 'gas50kg' =>'1',

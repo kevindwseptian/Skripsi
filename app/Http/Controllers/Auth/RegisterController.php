@@ -29,7 +29,16 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = RouteServiceProvider::HOME;
+    protected $redirectTo = '/home';
+
+    protected function redirectTo()
+    {
+        if (auth()->user()->role == 'U') {
+            return '/user';
+        }
+        return "WWKWKWKWKW";
+    }
+
 
     /**
      * Create a new controller instance.
@@ -79,5 +88,6 @@ class RegisterController extends Controller
             'alamat' => $data['alamat'],
             'role' => 'U',
         ]);
+
     }
 }

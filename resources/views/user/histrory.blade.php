@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-    <title>Order</title>
+    <title>History</title>
     <meta content="" name="description">
     <meta content="" name="keywords">
 
@@ -142,7 +142,6 @@
                         <table id="example" class="display" style="width:100%">
                             <thead>
                                 <tr>
-                                    <th>Nama toko</th>
                                     <th>No Telepon</th>
                                     <th>Gas 3kg</th>
                                     <th>Gas 12kg</th>
@@ -152,20 +151,30 @@
                                     <th>Total Pembayaran</th>
                                     <th>Pembayaran</th>
                                     <th>Status</th>
+                                    <th>Action</th>
+
+
 
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach ($order as $ord => $order)
                                 <tr>
-                                    <td>{{$order->namatoko}}</td>
                                     <td>{{$order->notelp}}</td>
                                     <td>{{$order->gas3kg}}</td>
                                     <td>{{$order->gas12kg}}</td>
                                     <td>{{$order->gas50kg}}</td>
                                     <td>{{$order->tglkirim}}</td>
                                     <td>{{$order->alamat}}</td>
+
+                                    @if (($order->gas3kg+$order->gas12kg+$order->gas50kg)>=10)
+                                    <td>{{
+                                    "Rp. ".number_format((($order->gas3kg * 17000)+($order->gas12kg * 100000)+($order->gas50kg * 700000))-((($order->gas3kg * 17000)+($order->gas12kg * 100000)+($order->gas50kg * 700000))*0.1) )}}
+                                    </td>
+                                    @else
                                     <td>{{ "Rp. ".number_format(($order->gas3kg * 17000)+($order->gas12kg * 100000)+($order->gas50kg * 700000))}}</td>
+                                    @endif
+
                                     <td>{{$order->pembayaran}}</td>
                                     {{-- <td>{{$order->status}}</td> --}}
                                     @if ($order->status=='L')
@@ -181,8 +190,20 @@
                                             Cancel
                                         </td>
                                     @endif
-
+                                    <td>
+                                        <div style="display: flex; flex-direction: row; gap: 10px;">
+                                        <a href="{{route('pemesanan.edit', $order->id)}}"
+                                            class="btn btn-sm btn-warning">Update</a>
+                                        <form onsubmit="return confirm('Apakah Anda Yakin ?');"
+                                            action="{{ route('pemesanan.destroy', $order->id) }}" method="POST">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                                        </form>
+                                        </div>
+                                    </td>
                                 </tr>
+
 
                                 @endforeach
                             </tbody>

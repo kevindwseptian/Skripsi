@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-    <title>Order</title>
+    <title>Edit Pemesanan</title>
     <meta content="" name="description">
     <meta content="" name="keywords">
 
@@ -141,7 +141,9 @@
 
                 <div class="row">
                     <div class="col-md-12">
-                        <form action="{{ route('pemesanan.store') }}" method="post">
+                        @foreach ($pemesanan as $pemesanan)
+                        <form method="POST" action="{{ route('pemesanan.update', $pemesanan->id) }}">
+                            @method('put')
                             @csrf
                             <div class="row">
                                 <div class="col-6">
@@ -152,8 +154,8 @@
                                             autocomplete="jumlahgas3kg" autofocus type="number"> --}}
                                             <input placeholder="Jumlah Gas 3Kg" id="jumlahgas3kg"
                                             class="form-control @error('jumlahgas3kg') is-invalid @enderror"
-                                            name="jumlahgas3kg" value="0" required min="0"
-                                            autocomplete="jumlahgas3kg" autofocus type="number" min="0">
+                                            name="jumlahgas3kg" required min="0"
+                                            autocomplete="jumlahgas3kg" autofocus type="number" min="0" value="{{$pemesanan->gas3kg}}">
 
                                         @error('jumlah gas 3kg')
                                         <span class="invalid-feedback" role="alert">
@@ -189,8 +191,8 @@
                                             autocomplete="jumlahgas12kg" autofocus type="number"> --}}
                                             <input placeholder="Jumlah Gas 12Kg" id="jumlahgas12kg"
                                             class="form-control @error('jumlahgas12kg') is-invalid @enderror"
-                                            name="jumlahgas12kg" value="0" required
-                                            autocomplete="jumlahgas12kg" autofocus type="number" min="0">
+                                            name="jumlahgas12kg"  required
+                                            autocomplete="jumlahgas12kg" autofocus type="number" min="0" value="{{$pemesanan->gas12kg}}">
 
                                         @error('jumlah gas 12kg')
                                         <span class="invalid-feedback" role="alert">
@@ -226,8 +228,8 @@
                                             autocomplete="jumlahgas50kg" autofocus type="number"> --}}
                                             <input placeholder="Jumlah Gas 50Kg" id="jumlahgas50kg"
                                             class="form-control @error('jumlahgas50kg') is-invalid @enderror"
-                                            name="jumlahgas50kg" value="0" required
-                                            autocomplete="jumlahgas50kg" autofocus type="number">
+                                            name="jumlahgas50kg"  required
+                                            autocomplete="jumlahgas50kg" autofocus type="number" value="{{$pemesanan->gas50kg}}">
 
                                         @error('jumlah gas 50kg')
                                         <span class="invalid-feedback" role="alert">
@@ -269,7 +271,7 @@
                                 <label>Tgl Kirim</label>
                                 <input type="date" placeholder="tglkirim" id="tglkirim"
                                     class="form-control @error('tglkirim') is-invalid @enderror" name="tglkirim"
-                                    value="{{ old('tglkirim') }}" required autocomplete="tglkirim" autofocus>
+                                    required autocomplete="tglkirim" autofocus value="{{$pemesanan->tglkirim}}">
 
                                 @error('tanggl kirim')
                                 <span class="invalid-feedback" role="alert">
@@ -281,8 +283,8 @@
                                 <select id="pembayaran" class="form-control @error('pembayaran') is-invalid @enderror"
                                     name="pembayaran" required autocomplete="pembayaran" autofocus>
                                     <option value="">Jenis Pembayaran</option>
-                                    <option value="transfer">Transfer</option>
-                                    <option value="transfer">COD</option>
+                                    <option value="transfer" {{$pemesanan->pembayaran == 'transfer'  ? 'selected' : ''}}>Transfer</option>
+                                    <option value="cod" {{$pemesanan->pembayaran == 'cod'  ? 'selected' : ''}}>COD</option>
                                 </select>
 
                                 @error('pembayaran')
@@ -295,7 +297,7 @@
 
                     </div>
 
-
+                    @endforeach
                     <div class="col-md-12">
                         <div class="row">
 

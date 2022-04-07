@@ -148,7 +148,7 @@
                 <!-- /.search form -->
                 <!-- sidebar menu: : style can be found in sidebar.less -->
                 <ul class="sidebar-menu" data-widget="tree">
-                <li><a href="'"><i class="fa fa-book"></i> <span>Dashboard</span></a></li>
+                <li><a href="/admin"><i class="fa fa-book"></i> <span>Dashboard</span></a></li>
                 <ul class="sidebar-menu" data-widget="tree">
                     <li class="header">Masterdata</li>
                     </li>
