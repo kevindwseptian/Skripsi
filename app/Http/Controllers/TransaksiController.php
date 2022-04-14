@@ -13,31 +13,26 @@ class TransaksiController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $selectTransaksi = DB::table('orders')
             ->join('users','orders.iduser','=','users.id')
             ->select(
                     'users.name',
-                    'orders.tglkirim'
+                    'orders.*'
                     )
-            ->selectRaw('cast(sum(orders.gas3kg)as UNSIGNED) as totalGas3kg')
-            ->selectRaw('cast(sum(orders.gas12kg)as UNSIGNED) as totalGas12kg')
-            ->selectRaw('cast(sum(orders.gas50kg)as UNSIGNED) as totalGas50kg')
-            ->selectRaw('cast(sum((orders.gas3kg*17000) + (orders.gas12kg*100000) + (orders.gas50kg*700000))as UNSIGNED) as totalPembayaran')
-            ->where('orders.status','A')
-            ->groupBy('orders.iduser')
-            ->get();
+            ->when($mulai = $request->get('mulai'), function($query) use ($mulai) {
+                return $query->whereDate('orders.tglkirim','>=',"$mulai");
 
-            $selectTotalTransaksi = DB::table('orders')
-            ->selectRaw('cast(sum((orders.gas3kg*17000) + (orders.gas12kg*100000) + (orders.gas50kg*700000))as UNSIGNED) as totalPembayaran')
-            ->where('orders.status','A')
-            ->get();
+              })->when($sampai = $request->get('sampai'), function($query) use ($sampai) {
+                return $query->whereDate('orders.tglkirim','<=',"$sampai");
+              })
+        ->where('orders.status','A')
+        // ->toSql();
+        // dd($selectTransaksi);
+            ->paginate(10);
 
-        return view('admin/transaksi.index',[
-            'transaksi' => $selectTransaksi,
-            'totaltransaksi' => $selectTotalTransaksi
-        ]);
+        return view('admin/transaksi.index')->with('transaksi',$selectTransaksi);
     }
 
     /**

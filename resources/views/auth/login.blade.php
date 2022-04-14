@@ -145,10 +145,7 @@
                             Daftar
                         </a>
                         <br/>
-                Lupa Password?
-                        <a href="#" >
-                            Forget
-                        </a>
+
             </form>
         </div>
         <!-- /.login-box-body -->

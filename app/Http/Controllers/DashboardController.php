@@ -71,8 +71,8 @@ class DashboardController extends Controller
                     ->count();
 
         $countOrder = DB::table('orders')
-                    ->where('created_at', $today)
-                    ->count();
+                    ->where('status', "P")
+                    ->get()->count();
 
 
         return view("admin.index",[
