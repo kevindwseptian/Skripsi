@@ -50,8 +50,8 @@ class LoginController extends Controller
         ]);
 
         if (auth()->attempt(array('email' => $input['email'], 'password' => $input['password']))) {
-            if (auth()->user()->role == 'A') {
-                // return redirect()->route('dashboard-admin')->with('success','Selamat datang ');
+            if (auth()->user()->role == 'A' || auth()->user()->role == 'T') {
+                return redirect()->route('dashboard-admin')->with('success','Selamat datang ');
             } else if (auth()->user()->role == 'U') {
                 return redirect()->route('dashboard-user')->with('success','Selamat datang ');
             }

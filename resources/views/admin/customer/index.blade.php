@@ -16,7 +16,7 @@
       <!-- Default box -->
       <div class="box">
         <div class="box-header with-border">
-          <h3 class="box-title">Title</h3>
+          <h3 class="box-title">Data Customer</h3>
 
           <div class="box-tools pull-right">
             <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip"
@@ -27,15 +27,17 @@
           </div>
         </div>
         <div class="box-body">
-            <table class="table table-hover">
-                <tbody><tr>
+            <table id="example1" class="display" style="width:100%">
+                <thead><tr>
                   <th>Id</th>
                   <th>Nama</th>
                   <th>Alamat</th>
                   <th>No Telp</th>
                   <th>NIK</th>
                   <th>Email</th>
+                  <th>Action</th>
                 </tr>
+            </thead>
                 @foreach ($customer as $item => $cstmr)
                 <tr>
                     <td>
@@ -82,4 +84,12 @@
 
     </section>
     <!-- /.content -->
+@endsection
+@section('customScript')
+<script type="text/javascript">
+    $(document).ready(function(){
+        $('#example1').DataTable();
+    });
+
+</script>
 @endsection

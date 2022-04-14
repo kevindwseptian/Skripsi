@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Customer;
 use Illuminate\Http\Request;
-use Auth;
+use App\Models\Receiving;
+use App\Models\DetailReceiving;
+use Illuminate\Support\Facades\DB;
 
-class CustomerController extends Controller
+class StockController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,8 +16,10 @@ class CustomerController extends Controller
      */
     public function index()
     {
-        $data=Customer::where('role','U')->get();
-        return view("admin.customer.index",['customer'=>$data]);
+
+        $selet = DB::table('receiving')->get();
+
+        return view('admin.produk.stock', ['stok'=>$selet]);
     }
 
     /**
@@ -26,7 +29,8 @@ class CustomerController extends Controller
      */
     public function create()
     {
-        //
+
+        return view('admin.produk.stockmasuk');
     }
 
     /**
@@ -43,10 +47,10 @@ class CustomerController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Customer  $customer
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Customer $customer)
+    public function show($id)
     {
         //
     }
@@ -54,43 +58,34 @@ class CustomerController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Customer  $customer
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Customer $customer)
+    public function edit($id)
     {
-        $data=Customer::where('id', Auth::user()->id)->get();
-        return view("user.customeredit", ['customer'=>$data]);
+        //
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Customer  $customer
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request)
+    public function update(Request $request, $id)
     {
-         Customer::where('id', Auth::user()->id)->update([
-            'name' => $request->name,
-            'nik' => $request->nik,
-            'notelp' => $request->nohp,
-            'email' => $request->email,
-            'alamat' => $request->alamat,
-        ]);
-        return view("user.dashboard");
+        //
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Customer  $customer
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($customer)
+    public function destroy($id)
     {
-        Customer::where('id', $customer)->delete();
-        return redirect('/customer')->with('success','Data Berhasil Disimpan');
+        //
     }
 }

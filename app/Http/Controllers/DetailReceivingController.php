@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Customer;
+use App\Models\DetailReceiving;
 use Illuminate\Http\Request;
-use Auth;
 
-class CustomerController extends Controller
+class DetailReceivingController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,8 +14,7 @@ class CustomerController extends Controller
      */
     public function index()
     {
-        $data=Customer::where('role','U')->get();
-        return view("admin.customer.index",['customer'=>$data]);
+        //
     }
 
     /**
@@ -43,10 +41,10 @@ class CustomerController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Customer  $customer
+     * @param  \App\Models\DetailReceiving  $detailReceiving
      * @return \Illuminate\Http\Response
      */
-    public function show(Customer $customer)
+    public function show(DetailReceiving $detailReceiving)
     {
         //
     }
@@ -54,43 +52,34 @@ class CustomerController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Customer  $customer
+     * @param  \App\Models\DetailReceiving  $detailReceiving
      * @return \Illuminate\Http\Response
      */
-    public function edit(Customer $customer)
+    public function edit(DetailReceiving $detailReceiving)
     {
-        $data=Customer::where('id', Auth::user()->id)->get();
-        return view("user.customeredit", ['customer'=>$data]);
+        //
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Customer  $customer
+     * @param  \App\Models\DetailReceiving  $detailReceiving
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request)
+    public function update(Request $request, DetailReceiving $detailReceiving)
     {
-         Customer::where('id', Auth::user()->id)->update([
-            'name' => $request->name,
-            'nik' => $request->nik,
-            'notelp' => $request->nohp,
-            'email' => $request->email,
-            'alamat' => $request->alamat,
-        ]);
-        return view("user.dashboard");
+        //
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Customer  $customer
+     * @param  \App\Models\DetailReceiving  $detailReceiving
      * @return \Illuminate\Http\Response
      */
-    public function destroy($customer)
+    public function destroy(DetailReceiving $detailReceiving)
     {
-        Customer::where('id', $customer)->delete();
-        return redirect('/customer')->with('success','Data Berhasil Disimpan');
+        //
     }
 }

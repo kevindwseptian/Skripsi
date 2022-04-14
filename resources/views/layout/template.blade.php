@@ -17,6 +17,8 @@
     <link rel="stylesheet" href="{{asset('Aset/dist/css/AdminLTE.min.css')}}">
 
     <link rel="stylesheet" href="{{asset('Aset/dist/css/skins/_all-skins.min.css')}}">
+    <!-- Data Table -->
+    <link href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css" rel="stylesheet">
 
     <!--[if lt IE 9]>
   <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -84,7 +86,7 @@
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                 <img src="{{asset('Aset/dist/img/user2-160x160.jpg')}}" class="user-image"
                                     alt="User Image">
-                                <span class="hidden-xs">Alexander Pierce</span>
+                                <span class="hidden-xs">{{Auth::user()->name}}</span>
                             </a>
                             <ul class="dropdown-menu">
                                 <!-- User image -->
@@ -93,17 +95,21 @@
                                         alt="User Image">
 
                                     <p>
-                                        Alexander Pierce - Web Developer
-                                        <small>Member since Nov. 2012</small>
+                                        {{Auth::user()->name}}
+                                        <small>Administrator</small>
                                     </p>
                                 </li>
 
                                 <li class="user-footer">
-                                    <div class="pull-left">
-                                        <a href="#" class="btn btn-default btn-flat">Profile</a>
-                                    </div>
+
                                     <div class="pull-right">
-                                        <a href="#" class="btn btn-default btn-flat">Sign out</a>
+                                        <a href="{{ route('logout') }}" class="btn btn-default btn-flat"onclick="event.preventDefault();
+                                            document.getElementById('logout-form').submit();">
+                                            {{ __('Logout') }}
+                                        </a>
+                                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                            @csrf
+                                        </form>
                                     </div>
                                 </li>
                             </ul>
@@ -126,7 +132,7 @@
                         <img src="{{asset('Aset/dist/img/user2-160x160.jpg')}}" class="img-circle" alt="User Image">
                     </div>
                     <div class="pull-left info">
-                        <p>Alexander Pierce</p>
+                        <p>{{Auth::user()->name}}</p>
                         <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
                     </div>
                 </div>
@@ -154,8 +160,10 @@
                 <ul class="sidebar-menu" data-widget="tree">
                     <li class="header">Warehouse </li>
 
-                    <li><a href="{{ route('pemesanan.index') }}"><i class="fa fa-book"></i> <span>Pesanan</span></a></li>
-                    <li><a href="#"><i class="fa fa-book"></i> <span>History Pemesanan</span></a></li>
+                    <li><a href="{{ route('admin.pemesanan.index') }}"><i class="fa fa-book"></i> <span>Pesanan</span></a></li>
+                    <li><a href="{{ route('admin.transaksi.index') }}"><i class="fa fa-book"></i> <span>History Pemesanan</span></a></li>
+                    <li><a href="{{ route('admin.stock.index') }}"><i class="fa fa-book"></i> <span>Receiving</span></a></li>
+
                 </ul>
             </section>
             <!-- /.sidebar -->
@@ -382,21 +390,24 @@
         integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <!-- Bootstrap 3.3.7 -->
     <script src="{{asset('Aset/bower_components/bootstrap/dist/js/bootstrap.min.js')}}"></script>
+    <!-- Data Table -->
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
     <!-- SlimScroll -->
     <script src="{{asset('Aset/bower_components/jquery-slimscroll/jquery.slimscroll.min.js')}}"></script>
     <!-- FastClick -->
     <script src="{{asset('Aset/bower_components/fastclick/lib/fastclick.js')}}"></script>
     <!-- AdminLTE App -->
     <script src="{{asset('Aset/dist/js/adminlte.min.js')}}"></script>
+
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/export-data.js"></script>
+    <script src="https://code.highcharts.com/modules/accessibility.js"></script>
     <script>
         $(document).ready(function () {
             $('.sidebar-menu').tree()
         })
     </script>
-    <script src="https://code.highcharts.com/highcharts.js"></script>
-    <script src="https://code.highcharts.com/modules/exporting.js"></script>
-    <script src="https://code.highcharts.com/modules/export-data.js"></script>
-    <script src="https://code.highcharts.com/modules/accessibility.js"></script>
     @yield('customScript')
 </body>
 

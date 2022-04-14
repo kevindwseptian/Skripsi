@@ -19,7 +19,7 @@
       <!-- Default box -->
       <div class="box">
         <div class="box-header with-border">
-          <h3 class="box-title">Title</h3>
+          <h3 class="box-title">Tambah Data LPG</h3>
 
           <div class="box-tools pull-right">
             <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip"
@@ -30,8 +30,8 @@
           </div>
         </div>
         <div class="box-body">
-            <table class="table table-hover">
-                <tbody><tr>
+            <table id="example1" class="display" style="width:100%">
+                <thead><tr>
                   <th>No</th>
                   <th>Unit code</th>
                   <th>Unit name</th>
@@ -39,6 +39,7 @@
                   <th>Stock</th>
                   <th>Action</th>
                 </tr>
+                </thead>
                 @foreach ($produk as $item => $prdk)
                 <tr>
                     <td>
@@ -60,7 +61,9 @@
                     <td>
                         <a href="{{route('produk.edit',$prdk->id)}}" class="btn btn-warning">
                             Edit
+
                         </a>
+
                     </td>
 
 
@@ -78,4 +81,12 @@
 
     </section>
     <!-- /.content -->
+@endsection
+@section('customScript')
+<script type="text/javascript">
+    $(document).ready(function(){
+        $('#example1').DataTable();
+    });
+
+</script>
 @endsection

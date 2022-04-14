@@ -177,9 +177,9 @@
 
                                     <td>{{$order->pembayaran}}</td>
                                     {{-- <td>{{$order->status}}</td> --}}
-                                    @if ($order->status=='L')
+                                    @if ($order->status=='A')
                                     <td>
-                                        Lunas
+                                        Paid
                                     </td>
                                     @elseif ($order->status=='P')
                                     <td>
@@ -192,19 +192,19 @@
                                     @endif
                                     <td>
                                         <div style="display: flex; flex-direction: row; gap: 10px;">
-                                        <a href="{{route('pemesanan.edit', $order->id)}}"
-                                            class="btn btn-sm btn-warning">Update</a>
-                                        <form onsubmit="return confirm('Apakah Anda Yakin ?');"
-                                            action="{{ route('pemesanan.destroy', $order->id) }}" method="POST">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="btn btn-sm btn-danger">Delete</button>
-                                        </form>
+                                            @if ($order->status=='P')
+                                            <a href="{{route('pemesanan.edit', $order->id)}}"
+                                                class="btn btn-sm btn-warning">Update</a>
+                                            <form onsubmit="return confirm('Apakah Anda Yakin ?');"
+                                                action="{{ route('pemesanan.destroy', $order->id) }}" method="POST">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                                            </form>
+                                            @endif
                                         </div>
                                     </td>
                                 </tr>
-
-
                                 @endforeach
                             </tbody>
                         </table>

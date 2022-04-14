@@ -5,7 +5,7 @@
 <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-       Data Customer
+      Pemesanan
 
       </h1>
     </section>
@@ -16,7 +16,7 @@
       <!-- Default box -->
       <div class="box">
         <div class="box-header with-border">
-          <h3 class="box-title">Title</h3>
+          <h3 class="box-title">Pemesanan Masuk</h3>
 
           <div class="box-tools pull-right">
             <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip"
@@ -27,8 +27,8 @@
           </div>
         </div>
         <div class="box-body">
-            <table class="table table-hover">
-                <tbody><tr>
+            <table id="example1" class="display" style="width:100%">
+                <thead><tr>
                   <th>Nama</th>
                   <th>No Telp</th>
                   <th>Gas 3Kg</th>
@@ -38,11 +38,13 @@
                   <th>Alamat</th>
                   <th>Pembayaran</th>
                   <th>Metode Pembayaran</th>
+                  <th>Status</th>
+                  <th>Aksi</th>
                 </tr>
+                </thead>
                 <tbody>
                     @foreach ($order as $ord => $order)
                     <tr>
-
                         <td>{{$order->name}}</td>
                         <td>{{$order->notelp}}</td>
                         <td>{{$order->gas3kg}}</td>
@@ -59,10 +61,9 @@
                         @endif
 
                         <td>{{$order->pembayaran}}</td>
-                        {{-- <td>{{$order->status}}</td> --}}
-                        @if ($order->status=='L')
+                        @if ($order->status=='A')
                         <td>
-                            Lunas
+                            Paid
                         </td>
                         @elseif ($order->status=='P')
                         <td>
@@ -70,31 +71,37 @@
                         </td>
                         @else
                             <td>
-                                Cancel
+                            Cancel
                             </td>
                         @endif
                         <td>
-                            <form onsubmit="return confirm('Apakah Anda Yakin ?');"
-                                action="{{ route('pemesanan.destroy', $order->id) }}" method="POST">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-sm btn-danger">Delete</button>
-                            </form>
-                            <form onsubmit="return confirm('Apakah Anda Yakin ?');"
-                                action="{{ route('pemesanan.destroy', $order->id) }}" method="POST">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-sm btn-danger">Delete</button>
-                            </form>
+                            <div style="display: flex; flex-direction: row; gap: 10px;">
+                                @if ($order->status=='P')
+                                <form onsubmit="return confirm('Apakah anda yakin menerima pesanan ini ?');"
+                                    action="{{ route('admin.pemesanan.update', $order->id) }}" method="POST">
+                                    @csrf
+                                    @method('PATCH')
+                                    <input type="hidden" value="A" name="status">
+                                    <button type="submit" class="btn btn-sm btn-success">Accept</button>
+                                </form>
+                                <form onsubmit="return confirm('Apakah anda yakin membatalkan pesanan ini ?');"
+                                    action="{{ route('admin.pemesanan.update', $order->id) }}" method="POST">
+                                    @csrf
+                                    @method('PATCH')
+                                    <input type="hidden" value="C" name="status">
+                                    <button type="submit" class="btn btn-sm btn-danger">Cancel</button>
+                                </form>
+                                <form onsubmit="return confirm('Apakah anda yakin menghapus pesanan ini ?');"
+                                    action="{{ route('pemesanan.destroy', $order->id) }}" method="POST">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                                </form>
+                                @endif
                             </div>
                         </td>
-                        <td>{{$order->status}}</td>
                     </tr>
-
-
-
                 </tr>
-
                 @endforeach
               </tbody></table>
         </div>
@@ -107,4 +114,12 @@
 
     </section>
     <!-- /.content -->
+@endsection
+@section('customScript')
+<script type="text/javascript">
+    $(document).ready(function(){
+        $('#example1').DataTable();
+    });
+
+</script>
 @endsection

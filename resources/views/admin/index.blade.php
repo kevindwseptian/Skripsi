@@ -13,37 +13,25 @@
     <!-- small box -->
     <div class="small-box bg-aqua">
       <div class="inner">
-        <h3>150</h3>
+        <h3>{{$count_order}}</h3>
 
         <p>New Orders</p>
       </div>
       <div class="icon">
         <i class="ion ion-bag"></i>
       </div>
-      <a href="/user/pemesanan" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+      <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
     </div>
   </div>
   <!-- ./col -->
-  <div class="col-lg-3 col-xs-6">
-    <!-- small box -->
-    <div class="small-box bg-green">
-      <div class="inner">
-        <h3>53<sup style="font-size: 20px">%</sup></h3>
-
-        <p>Bounce Rate</p>
-      </div>
-      <div class="icon">
-        <i class="ion ion-stats-bars"></i>
-      </div>
-      <a href="/" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
-    </div>
-  </div>
   <!-- ./col -->
   <div class="col-lg-3 col-xs-6">
     <!-- small box -->
     <div class="small-box bg-yellow">
       <div class="inner">
-        <h3>$count = DB::table('users')->count();</h3>
+        <h3>{{$count_customer}}</h3>
+
+
         <p>User Registrations</p>
       </div>
       <div class="icon">
@@ -138,13 +126,13 @@ Highcharts.chart('container', {
     yAxis: {
         min: 0,
         title: {
-            text: 'Penjualan'
+            text: 'Penjualan Gas'
         }
     },
     tooltip: {
         headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
         pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-            '<td style="padding:0"><b>{point.y:.1f} mm</b></td></tr>',
+            '<td style="padding:0"><b>{point.y:f} pcs</b></td></tr>',
         footerFormat: '</table>',
         shared: true,
         useHTML: true
@@ -155,19 +143,7 @@ Highcharts.chart('container', {
             borderWidth: 0
         }
     },
-    series: [{
-        name: 'LPG 3Kg',
-        data: [49.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4]
-
-    }, {
-        name: 'LPG 12kg',
-        data: [83.6, 78.8, 98.5, 93.4, 106.0, 84.5, 105.0, 104.3, 91.2, 83.5, 106.6, 92.3]
-
-    }, {
-        name: 'LPG 50kg',
-        data: [48.9, 38.8, 39.3, 41.4, 47.0, 48.3, 59.0, 59.6, 52.4, 65.2, 59.3, 51.2]
-
-    }]
+    series: {!!json_encode($data_gas_sales)!!}
 });
     </script>
 @endsection

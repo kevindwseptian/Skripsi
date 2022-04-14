@@ -15,26 +15,7 @@ class PemesananController extends Controller
      */
     public function index()
     {
-        // $selectOrder = DB::table('orders')
-        // ->join('users','orders.iduser','=','users.id')
-        // ->select(
-        //         'users.notelp',
-        //         'orders.id',
-        //         'orders.gas3kg',
-        //         'orders.gas12kg',
-        //         'orders.gas50kg',
-        //         'orders.tglkirim',
-        //         'users.alamat',
-        //         'orders.pembayaran',
-        //         'orders.status'
-        //         )
-        // ->where('orders.iduser',auth()->user()->id)
-        // ->orderBy('orders.created_at','ASC')
-        // ->get();
-
-            // dd($selectOrder);
-
-        // if(Auth::user()->role == "A"){
+        if(Auth::user()->role == "A"){
             $selectOrder = DB::table('orders')
             ->join('users','orders.iduser','=','users.id')
             ->select(
@@ -54,11 +35,28 @@ class PemesananController extends Controller
             return view("admin/produk.pemesananmasuk",[
                 'order' => $selectOrder
             ]);
-        //}
+        }else{
+            $selectOrder = DB::table('orders')
+            ->join('users','orders.iduser','=','users.id')
+            ->select(
+                    'users.notelp',
+                    'orders.id',
+                    'orders.gas3kg',
+                    'orders.gas12kg',
+                    'orders.gas50kg',
+                    'orders.tglkirim',
+                    'users.alamat',
+                    'orders.pembayaran',
+                    'orders.status'
+                    )
+            ->where('orders.iduser',auth()->user()->id)
+            ->orderBy('orders.created_at','ASC')
+            ->get();
 
-        // return view('user.histrory',[
-        //     'order' => $selectOrder
-        // ]);
+            return view('user.history',[
+                'order' => $selectOrder
+            ]);
+        }
     }
 
     /**
@@ -79,7 +77,6 @@ class PemesananController extends Controller
      */
     public function store(Request $request)
     {
-
         $data = [
             'namatoko' => $request->namatoko,
             'gas3kg' => $request->jumlahgas3kg,
@@ -89,9 +86,8 @@ class PemesananController extends Controller
             'pembayaran' => $request->pembayaran,
             'status' => 'P',
             'iduser'=> auth()->user()->id
-
         ];
-        // dd($data);
+
         $insertData = Order::create($data);
 
         if($insertData){
@@ -133,14 +129,21 @@ class PemesananController extends Controller
      */
     public function update(Request $request, $id)
     {
-        Order::where('id', $id)->update([
-            'gas3kg' => $request->jumlahgas3kg,
-            'gas12kg' => $request->jumlahgas12kg,
-            'gas50kg' => $request->jumlahgas50kg,
-            'tglkirim' => $request->tglkirim,
-            'pembayaran' => $request->pembayaran,
-        ]);
-        return redirect('user/pemesanan')->with('success','Data Berhasil Disimpan');
+        if(Auth::user()->role == "A"){
+            Order::where('id', $id)->update([
+                'status' => $request->status
+            ]);
+            return redirect('admin/pemesanan')->with('success','Data Berhasil Disimpan');
+        }else{
+            Order::where('id', $id)->update([
+                'gas3kg' => $request->jumlahgas3kg,
+                'gas12kg' => $request->jumlahgas12kg,
+                'gas50kg' => $request->jumlahgas50kg,
+                'tglkirim' => $request->tglkirim,
+                'pembayaran' => $request->pembayaran,
+            ]);
+            return redirect('user/pemesanan')->with('success','Data Berhasil Disimpan');
+        }
     }
 
     /**

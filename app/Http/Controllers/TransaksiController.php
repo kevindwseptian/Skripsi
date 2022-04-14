@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Transaksi;
 use Illuminate\Http\Request;
+use DB;
 
 class TransaksiController extends Controller
 {
@@ -14,7 +15,29 @@ class TransaksiController extends Controller
      */
     public function index()
     {
-        //
+        $selectTransaksi = DB::table('orders')
+            ->join('users','orders.iduser','=','users.id')
+            ->select(
+                    'users.name',
+                    'orders.tglkirim'
+                    )
+            ->selectRaw('cast(sum(orders.gas3kg)as UNSIGNED) as totalGas3kg')
+            ->selectRaw('cast(sum(orders.gas12kg)as UNSIGNED) as totalGas12kg')
+            ->selectRaw('cast(sum(orders.gas50kg)as UNSIGNED) as totalGas50kg')
+            ->selectRaw('cast(sum((orders.gas3kg*17000) + (orders.gas12kg*100000) + (orders.gas50kg*700000))as UNSIGNED) as totalPembayaran')
+            ->where('orders.status','A')
+            ->groupBy('orders.iduser')
+            ->get();
+
+            $selectTotalTransaksi = DB::table('orders')
+            ->selectRaw('cast(sum((orders.gas3kg*17000) + (orders.gas12kg*100000) + (orders.gas50kg*700000))as UNSIGNED) as totalPembayaran')
+            ->where('orders.status','A')
+            ->get();
+
+        return view('admin/transaksi.index',[
+            'transaksi' => $selectTransaksi,
+            'totaltransaksi' => $selectTotalTransaksi
+        ]);
     }
 
     /**
@@ -24,7 +47,7 @@ class TransaksiController extends Controller
      */
     public function create()
     {
-        //
+        return view ('stock_create');
     }
 
     /**

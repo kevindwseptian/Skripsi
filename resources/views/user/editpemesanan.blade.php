@@ -243,6 +243,10 @@
                                     <div class="form-group has-feedback">
                                         <input placeholder="Rp. 700.000" id="harga50kg"
                                             class="form-control @error('harga50kg') is-invalid @enderror"
+
+
+
+
                                             name="harga50kg" value="{{ old('harga50kg') }}" required
                                             autocomplete="harga50kg" readonly>
 
